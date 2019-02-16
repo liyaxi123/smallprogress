@@ -1,10 +1,12 @@
 const app = getApp();
-//获取全局属性
-const config = app.globalData.congfig;
-const api = app.glabalData.api;
+//获取全局属性 定义全局属性在app.js中
+const config = app.globalData.config;
+const api = app.globalData.api;
 const loading = app.globalData.loading;
 const util = app.globalData.util;
+// 天气图标基地址
 const COND_ICON_BASE_URL = config.COND_ICON_BASE_URL;
+// 背景图片基地址
 const BG_IMG_BASE_URL = config.BG_IMG_BASE_URL;
 //为了使用async await
 const regeneratorRuntime = require('../../lib/regenerator');
@@ -34,15 +36,19 @@ Page({
     hourlyWeather: [], //三小时天气数据
     lifestyle: [] //生活指数
   },
-    //加载提示
+    //加载提示  page注册页可以添加任何的数据通过this获取
     ...loading,
+    //页面显示时触发
     onShow(){
       this.init()
     },
     //初始化
     init(){
+      //loading解构出来的函数
       this.showLoading();
+      //初始化问候语
       this.initGreetings();
+      //初始化天气
       this.initWeatherInfo();
     },
     //允许分享
@@ -56,6 +62,7 @@ Page({
 
     onPullDownRefresh(){
       this.init();
+      //刷新结束
       wx.stopPullDownRefresh()
     },
     //初始化问候语
@@ -87,8 +94,8 @@ Page({
         })
         return;
       }
-      await api.getLocation().then((res)=>{
-        let {longitude,latitude} = res
+      await api.getLocation().then((res)=>{  //获取地理位置api
+        let {longitude,latitude} = res  //es6的写法 let {a,b} = res
         this.setData({
           location:`${longitude},${latitude}`
         })
@@ -105,7 +112,9 @@ Page({
     //逆地址获取地址描述
     getGeoDes(options){
       api.reverseGeocoder(option).then((res)=>{
+        //地址部件
         let addressComponent = res.address_component
+        //依次为城市，区 街道号
         let geoDes = `${addressComponet.city}${addressComponet.district}${addressComponet.street_number}`
         this.setData({
           geoDes
@@ -145,12 +154,13 @@ Page({
         hum: data.now.hum,
         pcpn: data.now.pcpn,
         condIconUrl: `${COND_ICON_BASE_URL}/${data.now.cond_code}.png`,
+        //把年份截取掉了
         loc: data.update.loc.slice(5).replace(/-/, '/')
       }
     })
   },
 
-  // 初始化背景（导航和内容）
+  // 初始化背景（导航和内容） 参数是天气状况码
   initBgImg(code) {
     let cur = config.bgImgList.find((item) => {
       return item.codes.includes(parseInt(code))

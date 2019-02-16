@@ -10,6 +10,7 @@
     "navigationBarTitleText": "Weather",
     "navigationBarTextStyle": "black"
   },
+  "cloud": true,
   "permission": {
     "scope.userLocation": {
       "desc": "你的地理位置将用于本地天气查询"
