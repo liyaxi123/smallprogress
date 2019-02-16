@@ -10,19 +10,22 @@
    <!-- 实时天气信息 -->
    <view class="now">
       <view class="now-position">
+      <!-- geoDes是地理位置 -->
           <text catchtap="toSearchPage">{{geoDes}}</text>
           <image src="https://6465-demo-57510e-1257978613.tcb.qcloud.la/miniWeather/images/icon/location_s_w.png" catchtap="toSearchPage"></image>
       </view>
       <view class="now-tmp">
+      <!-- noWeather代表实时天气数据  tmp代表温度-->
           <text class='now-tmp-num'>{{nowWeather.tmp}}</text>
           <text>℃</text>
       </view>
       <view class="now-cond">
+      <!-- 天气状况 -->
         <image src="{{nowWeather.condIconUrl}}"></image>
         <text>{{nowWeather.condTxt}}</text>
       </view>
       <view class='now-items'>
-          <view class='now-item-left'>
+          <view class='now-items-left'>
               <view>{{nowWeather.windDir}} {{nowWeather.windSc}}级</view>
               <view>湿度 {{nowWeather.hum}}</view>
           </view>
@@ -38,8 +41,8 @@
    <!-- 三小时内的天气 -->
   <view class="hourly-container">
     <view class="hourly-title">逐三小时预报</view>
-    <swiper class="hourly" indicator-active-color="#ffffff" indicator-dots="{{true}}">
-      <block wx:for="{{hourlyWeather}}" wx:for-index="times" wx:for-item="trip" wx:key="{{times}}">
+    <swiper class="hourly" indicator-active-color="#ffffff" indicator-dots="true">
+      <block wx:for="{{hourlyWeather}}" wx:for-index="times" wx:for-item="trip" wx:key="times">
         <swiper-item class="hourly-swiper-item">
           <block wx:for="{{trip}}" wx:for-item="item" wx:for-index="index" wx:key="{{index}}">
             <view class="hourly-swiper-column">
@@ -62,6 +65,7 @@
      <!-- 预测天气 -->
   <view class="forecast-container">
     <view class="forecast-title">近七天的天气情况</view>
+    <!-- 可以滑动的块 横向滑动 -->
     <scroll-view scroll-x>
       <view class="forecast">
           <!-- 日期 -->
@@ -124,7 +128,7 @@
 
   <!-- copyright -->
   <view class="copyright">
-    <text>developed by wuwhs</text>
+    <text>developed by liyaxi</text>
     <text>, api by heweather</text>
   </view>
 </view>
