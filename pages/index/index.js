@@ -175,7 +175,7 @@ Page({
       frontColor: '#ffffff',
       backgroundColor: cur.color,
       animation: {
-        duration: 400,
+        duration: 4000,
         timingFunc: 'easeIn'
       }
     })
