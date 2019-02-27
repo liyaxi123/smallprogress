@@ -25,5 +25,6 @@ globalData:{
   api,
   util,
   loading
-}
+},
+
 })

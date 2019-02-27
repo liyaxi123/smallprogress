@@ -111,7 +111,7 @@
   <!-- 生活指数 -->
   <view class="lifestyle-container">
     <view class="lifestyle-title">生活指数</view>
-    <view class="lifestyle">
+    <view class="lifebvstyle">
       <block wx:if="lifestyle.length">
         <view wx:for="{{lifestyle}}" wx:key="{{index}}">
           <view class="lifestyle-item--pic">

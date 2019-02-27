@@ -13,7 +13,7 @@
   "cloud": true,
   "permission": {
     "scope.userLocation": {
-      "desc": "你的地理位置将用于本地天气查询"
+      "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
   }
 }

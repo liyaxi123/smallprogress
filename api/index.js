@@ -42,6 +42,7 @@ const reverseGeocoder = option=>{
         resolve(res.result)
       },
       fail(err){
+        console.log(err)
         reject(err)
       }
     })
@@ -53,6 +54,7 @@ const getNowWeather = option=>{
     wx.request({
       url: config.nowWeatherUrl,
       method: 'GET',
+      //解构
       data: {
         ...commonParam,
         ...option
@@ -70,7 +72,7 @@ const getNowWeather = option=>{
 const getDailyWeather = (option) =>{
   return new Promise((resolve,reject)=>{
     wx.request({
-      url: config.getDailyWeatherUrl,
+      url: config.dailyWeatherUrl,
       method:'GET',
       //es6的解构
       data: {

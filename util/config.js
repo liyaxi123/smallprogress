@@ -14,7 +14,7 @@ module.exports = {
   // 生活指数接口地址
   lifestyleUrl: `${HEWEATHER_API}/lifestyle`,
   // 天气图标基地址
-  COND_ICON_BASE_URL: '../img',
+  COND_ICON_BASE_URL: '../../img',
   // 背景图片基地址
   BG_IMG_BASE_URL: 'https://6465-demo-57510e-1257978613.tcb.qcloud.la/miniWeather/images/bg',
   //背景图片列表

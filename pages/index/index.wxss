@@ -90,3 +90,63 @@
   font-size: 28rpx;
   margin: 0 20rpx 20rpx 0;
 }
+.hourly {
+  padding: 20rpx 0;
+  height: 400rpx;
+}
+.hourly-title,.forecast-title,.lifestyle-title{
+ text-align: center;
+ padding: 8rpx 0;
+ border-bottom: 2rpx solid white;
+}
+.hourly-container{
+  opacity: 0.3;
+  background-color: rgba(0,0,0,.3);
+  color:white;
+  /* text-align: center; */
+}
+.hourly-swiper-column > view {
+    margin-bottom:15rpx;
+}
+.hourly-swiper-item {
+  display: flex;
+  justify-content: space-around;
+}
+.hourly .forecast-icon,
+.forecast .forecast-icon {
+  width: 60rpx;
+  height: 60rpx;
+}
+.forecast-items {
+  display: flex;
+  justify-content: flex-start
+}
+.forecast-items > view {
+  width: 400rpx;
+  text-align: center;
+}
+.lifestyle-icon {
+  height:100rpx;
+  width: 100rpx;
+}
+.lifebvstyle {
+  display: flex;
+  flex-direction: column;
+}
+.lifebvstyle>view {
+  display: flex;
+  margin: 20rpx 20rpx;
+  justify-content: space-around;
+}
+.lifestyle-item--pic {
+ padding-right: 20rpx
+}
+.lifestyle-item--txt {
+ line-height: 34rpx;
+}
+.lifestyle-item--desc {
+  font-size: 26rpx;
+}
+scroll-view {
+  width: 200%
+}

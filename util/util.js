@@ -1,6 +1,6 @@
 //问候语
 const getGreetings = ()=>{
-  let h = new Date().getHours;
+  let h = new Date().getHours();
   let w = '';
   if(h>0&&h<5){
     w = '深夜'

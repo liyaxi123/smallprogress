@@ -27,7 +27,7 @@ Page({
       hum: '90', // 湿度
       pcpn: '0.0', // 降水量
       condIconUrl:`${COND_ICON_BASE_URL}/999.png`, //天气图标
-      loc: '' //更新时间
+      loc: '02-20 08:10' //更新时间
     },
     days:['今天','明天','后天'],
     canvasWidth: 0,
@@ -51,15 +51,21 @@ Page({
       //初始化天气
       this.initWeatherInfo();
     },
-    //允许分享
-    onShareAppMessage(){},
+    //允许分享转发，该方法与button 组件联合使用
+    onShareAppMessage(res){
+      return {
+        title: '可以查看天气的小程序',
+        path:'/pages/index/index',
+        imageUrl:''
+      }
+    },
     //跳到搜索页
     toSearchPage(){
       wx.navigateTo({
         url: '/pages/searchGeo/searchGeo',
       })
     },
-
+  //下拉刷新
     onPullDownRefresh(){
       this.init();
       //刷新结束
@@ -106,14 +112,14 @@ Page({
         })
       })
       .catch((err)=>{
-        console.err(err)
+        console.error(err)
       })
     },
     //逆地址获取地址描述
     getGeoDes(options){
-      api.reverseGeocoder(option).then((res)=>{
+      api.reverseGeocoder(options).then((res)=>{
         //地址部件
-        let addressComponent = res.address_component
+        let addressComponet = res.address_component
         //依次为城市，区 街道号
         let geoDes = `${addressComponet.city}${addressComponet.district}${addressComponet.street_number}`
         this.setData({
@@ -141,6 +147,7 @@ Page({
   },
   // 格式化实时天气数据
   formatNowWeather(data) {
+    console.log(data)
     this.setData({
       nowWeather: {
         parentCity: data.basic.parent_city,
@@ -194,7 +201,6 @@ Page({
           resolve()
         })
         .catch((err) => {
-          console.error(err)
           reject(err)
         })
     })
@@ -239,6 +245,7 @@ Page({
       .fields({
         size: true
       }).exec((res) => {
+        console.log(res[0].width)
         this.drawTemperatureLine({
           temperatureData,
           diagramWidth: res[0].width * 7
@@ -249,7 +256,7 @@ Page({
   // 绘制气温折线图
   drawTemperatureLine(data) {
     let { temperatureData, diagramWidth } = data
-    let rate = wx.getSystemInfoSync().windowWidth / 375
+    let rate = wx.getSystemInfoSync().windowWidth/375
 
     // 设置绘制 canvas 宽度
     this.setData({
