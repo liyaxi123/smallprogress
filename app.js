@@ -9,15 +9,19 @@ App({
    */
 
   // app.js中初始化云函数
-  onLaunch: function () {
-    if(!wx.cloud){
-      console.err('请使用2.2.3或一上的基础库以使用云能力')
-    }else{
-      wx.cloud.init({
-        traceUser: true,
-        env: 'weath-44b2a5'
-      })
-    }
+  // onLaunch: function () {
+  //   if(!wx.cloud){
+  //     console.err('请使用2.2.3或一上的基础库以使用云能力')
+  //   }else{
+  //     wx.cloud.init({
+  //       traceUser: true,
+  //       env: 'weath-44b2a5'
+  //     })
+  //   }
+  // },
+  onShow(options){
+    //获取场景值
+    console.log(options.scene)
   },
 //全局变量在此暴漏
 globalData:{

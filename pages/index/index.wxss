@@ -122,12 +122,19 @@
   justify-content: flex-start
 }
 .forecast-items > view {
-  width: 400rpx;
-  text-align: center;
+  width: 200rpx;
+  text-align: left;
+  padding-left:80rpx;
+}
+.forecast-items > image{
+  margin-left: -50rpx;
 }
 .lifestyle-icon {
   height:100rpx;
   width: 100rpx;
+}
+canvas {
+  margin-left:-50rpx;
 }
 .lifebvstyle {
   display: flex;
@@ -147,6 +154,13 @@
 .lifestyle-item--desc {
   font-size: 26rpx;
 }
-scroll-view {
-  width: 200%
+scroll-view view {
+  display: inline-block
+}
+.copyright text {
+  font-size: 20rpx;
+  color: grey;
+}
+.copyright {
+  text-align: center;
 }

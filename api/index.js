@@ -152,7 +152,7 @@ const getCityList =()=>{
     return Promise.resolve(CITY_LIST)
   }
   return new Promise((resolve,reject)=>{
-    qq.qqMapWX.getCityList({
+    qqMapWX.getCityList({
       success(res){
         let cityList = sortCityList(res.result[1]||[])
         wx.setStorage({
@@ -170,7 +170,7 @@ const getCityList =()=>{
 //获取关键字补充提示
 const getSuggestion = option=>{
   return new Promise((resolve,reject)=>{
-    qq.qqMapWX.getSuggestion({
+    qqMapWX.getSuggestion({
       ...option,
       success(res){
         resolve(res.data)

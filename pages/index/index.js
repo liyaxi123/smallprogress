@@ -1,3 +1,4 @@
+//获取全局的app实例
 const app = getApp();
 //获取全局属性 定义全局属性在app.js中
 const config = app.globalData.config;
@@ -8,8 +9,9 @@ const util = app.globalData.util;
 const COND_ICON_BASE_URL = config.COND_ICON_BASE_URL;
 // 背景图片基地址
 const BG_IMG_BASE_URL = config.BG_IMG_BASE_URL;
-//为了使用async await
+//为了使用async await 引用regeneratorRuntime
 const regeneratorRuntime = require('../../lib/regenerator');
+//引用wxCharts
 const wxCharts = require('../../lib/wxchart');
 Page({
   data:{
@@ -40,6 +42,7 @@ Page({
     ...loading,
     //页面显示时触发
     onShow(){
+      
       this.init()
     },
     //初始化
@@ -260,25 +263,25 @@ Page({
 
     // 设置绘制 canvas 宽度
     this.setData({
-      canvasWidth: diagramWidth
+      canvasWidth: diagramWidth //canvas宽度与容器宽度一致数据即可对齐
     })
 
     new wxCharts({
       canvasId: 'canvasWeather',
       type: 'line',
-      categories: temperatureData.dateArr,
+      categories: temperatureData.dateArr, //x轴的数据类型
       animation: false,
       config: {
         fontSize: 16 * rate,
         color: "#ffffff",
-        paddingX: 0,
-        paddingY: 30 * rate
+        paddingX: 0, //数据线距离屏幕左侧的距离
+        paddingY: 30 * rate  
       },
       series: [{
         name: '最高气温',
         data: temperatureData.tmpMaxArr,
-        fontOffset: -8 * rate,
-        format: function (val, name) {
+        fontOffset: -8 * rate, //数据距离数据线的位置
+        format: function (val, name) { //对数据的处理
           return val + '℃'
         }
       }, {
@@ -300,7 +303,10 @@ Page({
       dataLabel: true,
       dataPointShape: true,
       extra: {
-        lineStyle: 'curve'
+        lineStyle: 'curve',
+        radar:{
+          max: 300
+        }
       }
     })
 

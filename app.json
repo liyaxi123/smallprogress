@@ -1,19 +1,33 @@
 {
-  "pages":[
-    "pages/index/index",
-    "pages/searchGeo/searchGeo"
-  ],
+  "pages": ["pages/index/index","pages/searchGeo/searchGeo"],
   "window": {
-    "backgroundColor": "#F6f6f6",
-    "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#f6f6f6",
-    "navigationBarTitleText": "Weather",
-    "navigationBarTextStyle": "black"
+    "navigationBarTitleText": "天气查看器",
+    "navigationBarBackgroundColor": "#000000",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "yellow",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": true
+
   },
-  "cloud": true,
+  "tabBar": {
+    "position": "bottom",
+    "color": "#000000",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/searchGeo/searchGeo",
+        "text": "搜索"
+      }
+    ]
+  },
+  "debug": true,
   "permission": {
     "scope.userLocation": {
       "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
   }
+
 }
