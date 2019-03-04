@@ -1,5 +1,5 @@
 <!-- 背景 -->
-<view class="bg" style="background-image：url({{bgImgUrl}})"></view>
+<view class="bg" style="background-image: url({{bgImgUrl}})"></view>
 <view class="container">
     <!-- 用户信息  userAvatarUrl代表用户头像-->
    <view class="userinfo">
@@ -56,6 +56,16 @@
               <view>风速{{item.windSc}}级</view>
             </view>
           </block>
+          <!-- <view class="hourly-swiper-column">
+          <view>{{trip.data}}</view>
+         <view>{{item.condTxt}}</view>
+              <view>
+                <image class="forecast-icon" src="{{item.condIconUrl}}" />
+              </view>
+              <view>{{item.tmp}}℃</view>
+              <view>{{item.windDir}}</view>
+              <view>风速{{item.windSc}}级</view>
+            </view>-->
         </swiper-item>
       </block>
     </swiper>

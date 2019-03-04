@@ -1,5 +1,5 @@
 //获取全局的app实例
-const app = getApp();
+
 //获取全局属性 定义全局属性在app.js中
 const config = app.globalData.config;
 const api = app.globalData.api;
@@ -10,13 +10,13 @@ const COND_ICON_BASE_URL = config.COND_ICON_BASE_URL;
 // 背景图片基地址
 const BG_IMG_BASE_URL = config.BG_IMG_BASE_URL;
 //为了使用async await 引用regeneratorRuntime
-const regeneratorRuntime = require('../../lib/regenerator');
+
 //引用wxCharts
-const wxCharts = require('../../lib/wxchart');
+
 Page({
   data:{
     greetings: '',//问候语
-    bgImgUrl: BG_IMG_BASE_URL + './calm,jpg',//背景图片地址
+    bgImgUrl: BG_IMG_BASE_URL + './calm.jpg',//背景图片地址
     location: '',//地理坐标
     geoDes: '定位中...', //地理位置描述
     nowWeather: { //实时天气数据
@@ -42,57 +42,44 @@ Page({
     ...loading,
     //页面显示时触发
     onShow(){
+      //初始化函数init()
+    },
+    //初始化 init()
+    
+      //1loading解构出来的函数 showLoading
+     
+      //2初始化问候语 initGreetings
+     
+      //3初始化天气 initWeatherInfo
+     
+  
+    //允许分享转发，该方法与button 组件联合使用 onShareAppMessage
+    
+    //跳到搜索页 toSearchPage
+    
+  //下拉刷新onPullDownRefresh
+    
+      //1再次进行初始化
+      //2结束刷新
+    
+    //初始化问候语 initGreetings() greetings
+  
+    //初始化天气情况 initWeatherInfo
+    
+      //1getLocation
       
-      this.init()
-    },
-    //初始化
-    init(){
-      //loading解构出来的函数
-      this.showLoading();
-      //初始化问候语
-      this.initGreetings();
-      //初始化天气
-      this.initWeatherInfo();
-    },
-    //允许分享转发，该方法与button 组件联合使用
-    onShareAppMessage(res){
-      return {
-        title: '可以查看天气的小程序',
-        path:'/pages/index/index',
-        imageUrl:''
-      }
-    },
-    //跳到搜索页
-    toSearchPage(){
-      wx.navigateTo({
-        url: '/pages/searchGeo/searchGeo',
-      })
-    },
-  //下拉刷新
-    onPullDownRefresh(){
-      this.init();
-      //刷新结束
-      wx.stopPullDownRefresh()
-    },
-    //初始化问候语
-    initGreetings(){
-      this.setData({
-        greetings: util.getGreetings()
-      })
-    },
-    //初始化天气情况
-    async initWeatherInfo(){
-      await this.getLocation();
-      await this.getNowWeather();
-      await this.getDailyWeather();
-      await this.getHourlyWeather();
-      // 获取生活指数
-      await this.getLifestyle()
+      // 2getNowWeather
+      
+      //3getDailyWeather
+      
+      //4getHourlyWeather
+      
+      // 5getLifestyle
+      
 
-      // 关闭加载框
-      await this.hideLoading()
-    },
-    //获取地理位置信息
+      // 6关闭加载框 
+    
+    //获取地理位置信息 getLocation
     async getLocation() {
       let position = wx.getStorageSync('POSITION');
       position= position?JSON.parse(position):position;
