@@ -13,56 +13,48 @@ const commonParam = {
   lang: 'zh-cn',
   unit: 'm'
 }
-//获取地理位置信息
-const getLocation = ()=>{
-  return new Promise((resolve,reject)=>{
-    wx.getLocation({
-      type: 'gcj02 ',  //用于wx.openLocation()的类型  使用内置地图查看位置
-      //返回经纬度
-      success: function(res) {
-        resolve(res)
-      },
-      fail(err){
-        reject(err)
-      }
-    })
+//获取地理位置信息 getLocation() ,注意函数进行promise封装
+  const getLocation = ()=> {
+  return new Promise((resolve, reject) => {
+   wx.getLocation({
+     type: 'gcj02',
+     success: (res) => {
+       resolve(res)
+     },
+     fail: (err) => {
+       reject(err)
+     }
+   })
   })
-}
-//逆地址 坐标-> 描述  api
-const reverseGeocoder = option=>{
-  //参数是经纬度
-  return new Promise((resolve,reject)=>{
+};
+//逆地址 坐标-> 描述  reverseGeocoder(option) promise进行封装 微信sdk
+ const reverseGeocoder = option => {
+  return new Promise((resolve, reject) => {
     qqMapWX.reverseGeocoder({
-      location:{
-        latitude: option.latitude,
-        longitude: option.longitude
-      },
-      success(res){
-        // res.result逆地址解析结果
+      location: option,
+      success: res => {
         resolve(res.result)
       },
-      fail(err){
-        console.log(err)
+      fail: err => {
         reject(err)
       }
     })
   })
-}
-//实时天气
-const getNowWeather = option=>{
+};
+//实时天气 需要用promise进行一层封装
+const getNowWeather = options => {
   return new Promise((resolve,reject)=>{
     wx.request({
       url: config.nowWeatherUrl,
-      method: 'GET',
-      //解构
-      data: {
+      method:'GET',
+      data:{
         ...commonParam,
-        ...option
+        ...options
       },
-      success(res){
+      success: (res) => {
         resolve(res.data)
       },
-      fail(err){
+      fail: err => {
         reject(err)
       }
     })

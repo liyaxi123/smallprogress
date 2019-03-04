@@ -1,5 +1,5 @@
 //获取全局的app实例
-
+const app = getApp();
 //获取全局属性 定义全局属性在app.js中
 const config = app.globalData.config;
 const api = app.globalData.api;
@@ -10,13 +10,13 @@ const COND_ICON_BASE_URL = config.COND_ICON_BASE_URL;
 // 背景图片基地址
 const BG_IMG_BASE_URL = config.BG_IMG_BASE_URL;
 //为了使用async await 引用regeneratorRuntime
-
+const regeneratorRuntime = require('../../lib/regenerator.js');
 //引用wxCharts
-
+const wxCharts = require('../../lib/wxchart.js');
 Page({
   data:{
     greetings: '',//问候语
-    bgImgUrl: BG_IMG_BASE_URL + './calm.jpg',//背景图片地址
+    bgImgUrl: BG_IMG_BASE_URL + '/calm.jpg',//背景图片地址
     location: '',//地理坐标
     geoDes: '定位中...', //地理位置描述
     nowWeather: { //实时天气数据
@@ -42,34 +42,45 @@ Page({
     ...loading,
     //页面显示时触发
     onShow(){
-      //初始化函数init()
+      this.init();
     },
     //初始化 init()
-    
-      //1loading解构出来的函数 showLoading
-     
-      //2初始化问候语 initGreetings
-     
-      //3初始化天气 initWeatherInfo
-     
-  
+     init () {
+       this.showLoading();
+       this.initGreetings();
+       this.initWeatherInfo();
+     },
     //允许分享转发，该方法与button 组件联合使用 onShareAppMessage
-    
+    onShareAppMessage (res) {
+      return {
+        title: '可以直接看天气的小程序'
+      }
+    },
     //跳到搜索页 toSearchPage
-    
+    toSearchPage(){
+      wx.navigateTo({
+        url: '../searchGeo/searchGeo',
+      })
+    },
   //下拉刷新onPullDownRefresh
-    
-      //1再次进行初始化
-      //2结束刷新
+    onPullDownRefresh () {
+      this.init();
+      wx.stopPullDownRefresh();
+    },
     
     //初始化问候语 initGreetings() greetings
+    initGreetings () {
+      this.setData({
+        greetings: util.getGreetings()
+      })
+    },
   
     //初始化天气情况 initWeatherInfo
-    
-      //1getLocation
-      
-      // 2getNowWeather
-      
+    async initWeatherInfo () {
+      await this.getLocation();
+      await this.getNowWeather(); 
+      await this.getHourlyWeather();
+    }, 
       //3getDailyWeather
       
       //4getHourlyWeather
@@ -80,43 +91,49 @@ Page({
       // 6关闭加载框 
     
     //获取地理位置信息 getLocation
-    async getLocation() {
-      let position = wx.getStorageSync('POSITION');
-      position= position?JSON.parse(position):position;
-      if(position) {
+      getLocation(){
+        var _this = this
+        const position = wx.getStorageSync('POSITION');
+        if(position) {
+          this.setData({
+            location: `${_this.stringSplit(position)[0]},${_this.stringSplit(position)[1]}`,
+            geoDes: _this.stringSplit(position)[2]
+          })
+        };
+        api.getLocation().then(data => {
+          this.setData({
+            location: `${data.longitude},${data.latitude}`
+          })
+          return this.location
+        }).catch(err => {
+          console.error(err)
+        }).then(data=>{
+          this.getGeoDes(data);
+        })
+      },
+    //逆地址获取地址描述  getGeoDes(options)
+    getGeoDes(options){
+      const lac = options
+      api.reverseGeocoder(options).then(data => {
+        const addr = data.address_component
         this.setData({
-          location:`${position.longitude},${position.latitude}`,
-          geoDes: position.title
-        })
-        return;
-      }
-      await api.getLocation().then((res)=>{  //获取地理位置api
-        let {longitude,latitude} = res  //es6的写法 let {a,b} = res
-        this.setData({
-          location:`${longitude},${latitude}`
-        })
-        //逆地址获取地址描述
-        this.getGeoDes({
-          longitude,
-          latitude
-        })
-      })
-      .catch((err)=>{
+          geoDes: `${addr.city}${addr.district}${addr.street}${addr.street_number}`         })
+        //存入缓存
+        wx.setStorageSync(
+           'POSITION',
+          `${this.stringSplit(this.data.location)[0]},${this.stringSplit(this.data.location)[1]},${this.data.geoDes}`
+          
+        );
+      }).catch(function(err){
         console.error(err)
       })
     },
-    //逆地址获取地址描述
-    getGeoDes(options){
-      api.reverseGeocoder(options).then((res)=>{
-        //地址部件
-        let addressComponet = res.address_component
-        //依次为城市，区 街道号
-        let geoDes = `${addressComponet.city}${addressComponet.district}${addressComponet.street_number}`
-        this.setData({
-          geoDes
-        })
-      })
+    //工具函数截取经纬度字符串进行保存
+    stringSplit(strings){
+     var arr = strings.split(',');
+      return arr
     },
+
     //获取实时天气
   getNowWeather() {
     return new Promise((resolve, reject) => {
@@ -127,17 +144,16 @@ Page({
           let data = res.HeWeather6[0]
           this.formatNowWeather(data)
           this.initBgImg(data.now.cond_code)
-          resolve()
+          resolve();
         })
         .catch((err) => {
           console.error(err)
-          reject(err)
+          reject()
         })
     })
   },
   // 格式化实时天气数据
   formatNowWeather(data) {
-    console.log(data)
     this.setData({
       nowWeather: {
         parentCity: data.basic.parent_city,
@@ -180,6 +196,7 @@ Page({
 
   // 获取逐日天气
   getDailyWeather() {
+    console.log(123)
     return new Promise((resolve, reject) => {
       api.getDailyWeather({
         location: this.data.location
@@ -333,6 +350,7 @@ Page({
         location: this.data.location
       })
         .then((res) => {
+          console.log(res)
           let data = res.HeWeather6[0].hourly
           this.formaHourlyWeather(data)
           resolve()

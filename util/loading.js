@@ -2,7 +2,7 @@
 const showLoading = ()=>{
   return new Promise ((resolve,reject)=>{
     wx.showLoading({
-      title: '请稍等数据正在请求中...',
+      title: '数据正在请求...',
       mask:true,
       success: () => {
         resolve();

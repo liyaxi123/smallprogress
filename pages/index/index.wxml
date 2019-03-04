@@ -71,7 +71,7 @@
     </swiper>
   </view>
   <!-- 广告 -->
-  <ad></ad>
+  <!-- <ad></ad> -->
      <!-- 预测天气 -->
   <view class="forecast-container">
     <view class="forecast-title">近七天的天气情况</view>
