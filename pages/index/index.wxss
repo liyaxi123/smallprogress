@@ -124,7 +124,7 @@
 .forecast-items > view {
   width: 200rpx;
   text-align: left;
-  padding-left:80rpx;
+  padding-left:75rpx;
 }
 .forecast-items > image{
   margin-left: -50rpx;

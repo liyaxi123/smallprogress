@@ -1,4 +1,3 @@
-<!-- miniprogram/pages/searchGeo/searchGeo.wxml -->
 <view class="search-container">
   <!-- 搜索框 -->
   <view class="search-box {{isShowSugg ? 'focus' : ''}}">

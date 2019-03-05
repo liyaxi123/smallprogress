@@ -80,11 +80,9 @@ Page({
       await this.getLocation();
       await this.getNowWeather(); 
       await this.getHourlyWeather();
-    }, 
-      //3getDailyWeather
-      
-      //4getHourlyWeather
-      
+      await this.getDailyWeather();
+      await this.getLifestyle();
+    },
       // 5getLifestyle
       
 
@@ -196,13 +194,13 @@ Page({
 
   // 获取逐日天气
   getDailyWeather() {
-    console.log(123)
     return new Promise((resolve, reject) => {
       api.getDailyWeather({
         location: this.data.location
       })
         .then((res) => {
           let data = res.HeWeather6[0].daily_forecast
+          console.log(data)
           this.formatDailyWeather(data)
           this.getDailyContainer()
           resolve()
@@ -246,9 +244,9 @@ Page({
 
   // 获取逐日天气容器宽
   getDailyContainer() {
-    let temperatureData = this.formatTemperatureData(this.data.dailyWeather)
+    let temperatureData = this.formatTemperatureData(this.data.dailyWeather) //对象
 
-    wx.createSelectorQuery().select('.forecast-day')
+    wx.createSelectorQuery().select('.forecast-day')//今天样式
       .fields({
         size: true
       }).exec((res) => {
@@ -263,7 +261,7 @@ Page({
   // 绘制气温折线图
   drawTemperatureLine(data) {
     let { temperatureData, diagramWidth } = data
-    let rate = wx.getSystemInfoSync().windowWidth/375
+    let rate = wx.getSystemInfoSync().windowWidth/375  //为了自适应所有的屏幕
 
     // 设置绘制 canvas 宽度
     this.setData({
@@ -279,7 +277,7 @@ Page({
         fontSize: 16 * rate,
         color: "#ffffff",
         paddingX: 0, //数据线距离屏幕左侧的距离
-        paddingY: 30 * rate  
+        paddingY: 50 * rate  
       },
       series: [{
         name: '最高气温',
@@ -350,7 +348,7 @@ Page({
         location: this.data.location
       })
         .then((res) => {
-          console.log(res)
+        
           let data = res.HeWeather6[0].hourly
           this.formaHourlyWeather(data)
           resolve()
@@ -401,6 +399,7 @@ Page({
           let data = res.HeWeather6[0].lifestyle
           this.formatLifestyle(data)
           resolve()
+          this.hideLoading();
         })
         .catch((err) => {
           console.error(err)

@@ -1,5 +1,5 @@
 {
-  "pages": ["pages/index/index","pages/searchGeo/searchGeo"],
+  "pages": ["pages/searchGeo/searchGeo","pages/index/index"],
   "window": {
     "navigationBarTitleText": "天气查看器",
     "navigationBarBackgroundColor": "#000000",
