@@ -1,5 +1,5 @@
 {
-  "pages": ["pages/searchGeo/searchGeo","pages/index/index"],
+  "pages": ["pages/index/index","pages/searchGeo/searchGeo"],
   "window": {
     "navigationBarTitleText": "天气查看器",
     "navigationBarBackgroundColor": "#000000",
@@ -19,7 +19,7 @@
       },
       {
         "pagePath": "pages/searchGeo/searchGeo",
-        "text": "搜索"
+        "text": "其他地区天气"
       }
     ]
   },

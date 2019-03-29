@@ -50,6 +50,7 @@ Page({
         this.setData({
           cityList: res
         })
+        console.log(res)
         resolve()
       })
         .catch((err) => {
@@ -66,11 +67,11 @@ Page({
       const filterName = ['北京市', '上海市', '广州市', '深圳市', '武汉市']
       const cityName = ['东城区', '黄浦区', '广州市', '深圳市', '武汉市']
       let filterCities = []
-      let num = 0
+      let num = 0 // 为了得到所得元素的index
 
       this.data.cityList.forEach((item) => {
-        if (cityName.includes(item.fullname)) {
-          let c = { ...item, fullname: filterName[num] }
+        if (cityName.includes(item.fullname)) { // 城市列表中含有cityName数组中的城市
+          let c = { ...item, fullname: filterName[num] } 
           filterCities.push(c)
           num++
         }
@@ -86,15 +87,17 @@ Page({
 
   // 城市列表滚动
   scroll: util.throttle(function () {
-    wx.createSelectorQuery().selectAll('.city-list-title')
+    wx.createSelectorQuery().selectAll('.city-list-title') // 这里代表城市列表头A,B,C,D....
       .boundingClientRect((rects) => {
-        let index = rects.findIndex((item) => {
-          return item.top >= 0
+        let index = rects.findIndex((item) => { // findIndex返回满足条件的第一个数组元素的索引位置
+          return item.top >= 0 // 返回第一个top大于0的元素。
         })
         if (index === -1) {
           index = rects.length
         }
         this.setIndex(index - 1)
+        // 本身循环的检索数据就自带index属性，滚动的时候通过findIndex函数创造出一个索引与之对比，相等则
+        // 改变颜色
       }).exec()
   }, 20),
 
@@ -108,12 +111,13 @@ Page({
     // 延时设置索引条焦点
     setTimeout(() => {
       this.setData({
+        // barIndex控制着索引条的的样式
         barIndex: this.data.indexList.findIndex((item) => item === id)
       })
     }, 500)
   },
 
-  // 取消
+  // 取消 搜索框取消事件
   cancelSearch() {
     this.setData({
       initValue: '',
@@ -168,19 +172,23 @@ Page({
 
     wx.setStorageSync(
       'POSITION',
-      JSON.stringify({
-        title: title,
-        longitude: location.lat,
-        latitude: location.lng
-      })
+      // JSON.stringify({
+      //   title: title,
+      //   longitude: location.lat,
+      //   latitude: location.lng
+      // })
+      `${location.lat},${location.lng},${title}`
     )
     this.navigateToIndex()
   },
 
   // 跳转到首页
   navigateToIndex() {
-    wx.navigateBack({
-      url: '/pages/index/index'
+    // wx.navigateTo({
+    //   url: '/pages/index/index'
+    // })
+    wx.switchTab({
+      url: '/pages/index/index',
     })
   },
 
@@ -207,11 +215,12 @@ Page({
 
     wx.setStorageSync(
       'POSITION',
-      JSON.stringify({
-        title: fullname,
-        longitude: location.lat,
-        latitude: location.lng
-      })
+      // JSON.stringify({
+      //   title: fullname,
+      //   longitude: location.lat,
+      //   latitude: location.lng
+      // })
+      `${location.lng},${location.lat},${fullname}`
     )
     this.navigateToIndex()
   }

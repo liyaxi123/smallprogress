@@ -149,7 +149,7 @@ const getCityList =()=>{
         let cityList = sortCityList(res.result[1]||[])
         wx.setStorage({
           key: 'CITY_LIST',
-          data: 'cityList',
+          data: cityList,
         })
         resolve(cityList)
       },

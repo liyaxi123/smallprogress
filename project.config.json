@@ -1,5 +1,5 @@
 {
-  "cloudfunctionRoot": "cloudfunctions/",
+	"cloudfunctionRoot": "cloudfunctions/",
 	"description": "项目配置文件",
 	"packOptions": {
 		"ignore": []
@@ -15,7 +15,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.0.4",
 	"appid": "wx2a2ff3a14075b9b4",
-	"projectname": "Weather",
+	"projectname": "smallprogress",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},

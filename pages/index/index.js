@@ -58,7 +58,7 @@ Page({
     },
     //跳到搜索页 toSearchPage
     toSearchPage(){
-      wx.navigateTo({
+      wx.switchTab({
         url: '../searchGeo/searchGeo',
       })
     },
@@ -92,22 +92,24 @@ Page({
       getLocation(){
         var _this = this
         const position = wx.getStorageSync('POSITION');
+        console.log(position)
         if(position) {
           this.setData({
             location: `${_this.stringSplit(position)[0]},${_this.stringSplit(position)[1]}`,
             geoDes: _this.stringSplit(position)[2]
           })
-        };
-        api.getLocation().then(data => {
-          this.setData({
-            location: `${data.longitude},${data.latitude}`
+        }else {
+          api.getLocation().then(data => {
+            this.setData({
+              location: `${data.longitude},${data.latitude}`
+            })
+            return this.location
+          }).catch(err => {
+            console.error(err)
+          }).then(data => {
+            this.getGeoDes(data);
           })
-          return this.location
-        }).catch(err => {
-          console.error(err)
-        }).then(data=>{
-          this.getGeoDes(data);
-        })
+        }
       },
     //逆地址获取地址描述  getGeoDes(options)
     getGeoDes(options){
@@ -140,6 +142,7 @@ Page({
       })
         .then((res) => {
           let data = res.HeWeather6[0]
+          console.log(data)
           this.formatNowWeather(data)
           this.initBgImg(data.now.cond_code)
           resolve();
@@ -200,7 +203,6 @@ Page({
       })
         .then((res) => {
           let data = res.HeWeather6[0].daily_forecast
-          console.log(data)
           this.formatDailyWeather(data)
           this.getDailyContainer()
           resolve()
